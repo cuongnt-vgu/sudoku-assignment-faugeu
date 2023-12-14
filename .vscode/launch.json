@@ -4,11 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/sudoku",
+            "cwd": "${workspaceFolder}",
             "args": ["000105000140000670080002400063070010900000003010090520007200080026000035000409000"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
