@@ -142,6 +142,9 @@ void load_sudoku(SudokuBoard *p_board, char *textData)
 }
 
 bool apply_constraint(Cell **p_cells, int value)
+/*
+Check if a solved value is a candidate of another cell -> unset candidate
+*/
 {
     bool ret = false;
 
@@ -160,6 +163,11 @@ bool apply_constraint(Cell **p_cells, int value)
 }
 
 bool show_possible(SudokuBoard *p_board, Cell **p_solved_cells, int counter)
+/*
+Check if we can remove some candidates that are used in solved cells
+If yes -> It is possible to solve
+If no -> It is not possible to solve
+*/
 {
     bool ret = false;
     for (int i = 0; i < counter; i++)
@@ -186,6 +194,9 @@ bool is_in_list(Cell **p_array, int size, Cell *p)
 }
 
 int check_solved_cells(SudokuBoard *p_board, Cell ***p_solved_cells)
+/*
+Check if any cells only have 1 candidate -> choose that candidate as the value of the cell
+*/
 {
     int counter = p_board->solved_counter;
 
@@ -206,6 +217,7 @@ int check_solved_cells(SudokuBoard *p_board, Cell ***p_solved_cells)
         }
     }
     *p_solved_cells = &p_board->solved_cells[counter];
+    // return number of new solved cells
     return p_board->solved_counter - counter;
 }
 
