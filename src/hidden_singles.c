@@ -2,12 +2,12 @@
 #include <stdlib.h>
 
 
-int check_hidden_single_values(Cell **p_cells, int possible_hidden, int index)
+int check_hidden_single_values(Cell **p_cells, int possible, int index)
 {
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         if (i == index || p_cells[i]->num_candidates == 1) continue;
-        if (is_candidate(p_cells[i], possible_hidden)) return 0;
+        if (is_candidate(p_cells[i], possible)) return 0;
     }
     return 1;
 }
