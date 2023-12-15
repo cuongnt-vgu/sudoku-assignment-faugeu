@@ -36,7 +36,7 @@ void find_hidden_single(Cell **p_cells, HiddenSingle *p_hidden_singles,
 int hidden_singles(SudokuBoard *p_board)
 {
     int counter = 0;
-    HiddenSingle p_hidden_singles[BOARD_SIZE * BOARD_SIZE * 9];
+    HiddenSingle p_hidden_singles[BOARD_SIZE * BOARD_SIZE];
 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
