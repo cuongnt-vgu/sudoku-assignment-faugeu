@@ -105,19 +105,13 @@ int naked_triples(SudokuBoard *p_board)
     {
         Cell** p_cells = p_naked_triples[i].p_cells;
         int triples_values[3];
-        int triples_indices[3];
-        int triples_indices_count = 0;
         for (int j = 0; j < 3; j++)
         {
             triples_values[j] = p_naked_triples[i].values[j];
         }
         for (int j = 0; j < BOARD_SIZE; j++)
         {
-            if (check_cell_in_triples(triples_values, p_cells[j]))
-            {
-                triples_indices[triples_indices_count++] = j;
-            }
-            else
+            if (!check_cell_in_triples(triples_values, p_cells[j]))
             {
                 for (int k = 0; k < 3; k++)
                 {
