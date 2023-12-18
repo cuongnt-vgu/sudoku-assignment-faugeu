@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int check_cell_in_hidden_triples(int triples[3], Cell* p_cell)
+int check_cell_in_hidden_triples(Cell* p_cell, int triples[3])
 {
     for (int i = 0; i < 3; i++)
     {   
@@ -17,19 +17,19 @@ int check_hidden_triples(Cell **p_cells, int possible_triples[], int *indices)
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         if (p_cells[i]->num_candidates == 1) continue;
-        else if (check_cell_in_hidden_triples(possible_triples, p_cells[i])) indices[cell_counter++] = i;
+        else if (check_cell_in_hidden_triples(p_cells[i], possible_triples)) indices[cell_counter++] = i;
     }
-    if (cell_counter == 3) return 1;
-    return 0;
+    return cell_counter == 3;
 }
 
-void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p_counter, int unit)
+void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p_counter, int is_box)
 {
     int candidate_counter[BOARD_SIZE];
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         candidate_counter[i] = 0;
     }
+
     for (int i = 0; i < BOARD_SIZE; i++)
     {
         int* candidates = get_candidates(p_cells[i]);
@@ -62,10 +62,10 @@ void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p
                 int indices[BOARD_SIZE];
                 if (check_hidden_triples(p_cells, values, indices))
                 {
-                    if (unit == 1)
+                    if (is_box == 1)
                     {
-                        if ((indices[0] == 0 || indices[0] == 3 || indices[0] == 6) && indices[1] == indices[0]+1 && indices[2] == indices[0]+2) continue;
-                        else if ((indices[0] >= 0 && indices[0] <= 2) && indices[1] == indices[0]+3 && indices[2] == indices[0]+6) continue;
+                        if (indices[0] % 3 == 0 && indices[1] == indices[0]+1 && indices[2] == indices[0]+2) continue;
+                        else if (indices[0] >= 0 && indices[0] <= 2 && indices[1] == indices[0]+3 && indices[2] == indices[0]+6) continue;
                     }
                     p_hidden_triples[(*p_counter)++] = (HiddenTriples){p_cells, {indices[0], indices[1], indices[2]}, {possible_triples[i], possible_triples[j], possible_triples[k]}};
                 }
@@ -98,7 +98,7 @@ int hidden_triples(SudokuBoard *p_board)
         }
         for (int j = 0; j < BOARD_SIZE; j++)
         {
-            if (check_cell_in_hidden_triples(triples_values, p_cells[j]))
+            if (check_cell_in_hidden_triples(p_cells[j], triples_values))
             {
                 for (int k = 1; k < BOARD_SIZE+1; k++)
                 {
