@@ -47,7 +47,7 @@ int hidden_singles(SudokuBoard *p_board)
     int offset = 0;
     for (int i = 0; i < counter; i++)
     {
-        if (p_hidden_singles[i].p_cell->num_candidates == 1) offset += 1;
+        if (p_hidden_singles[i].p_cell->num_candidates == 1) offset++;
         set_candidates(p_hidden_singles[i].p_cell,  (int *)(int[]){p_hidden_singles[i].value}, 1);
     }
     return counter - offset;

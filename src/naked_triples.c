@@ -79,8 +79,10 @@ void find_naked_triples(Cell **p_cells, NakedTriples *p_naked_triples, int *p_co
                 {
                     if (is_box == 1)
                     {
-                        if (indices[0] % 3 == 0 && indices[1] == indices[0]+1 && indices[2] == indices[0]+2) continue;
-                        else if (indices[0] >= 0 && indices[0] <= 2 && indices[1] == indices[0]+3 && indices[2] == indices[0]+6) continue;
+                        if (p_cells[indices[0]]->row_index == p_cells[indices[1]]->row_index && 
+                            p_cells[indices[1]]->row_index == p_cells[indices[2]]->row_index) continue;
+                        if (p_cells[indices[0]]->col_index == p_cells[indices[1]]->col_index && 
+                            p_cells[indices[1]]->col_index == p_cells[indices[2]]->col_index) continue;
                     }
                     p_naked_triples[(*p_counter)++] = (NakedTriples){p_cells, {indices[0], indices[1], indices[2]}, 
                                                         {possible_triples[i], possible_triples[j], possible_triples[k]}};

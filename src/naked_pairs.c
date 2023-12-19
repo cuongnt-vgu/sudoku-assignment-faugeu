@@ -24,11 +24,12 @@ void find_naked_pairs(Cell **p_cells, NakedPairs *p_naked_pairs,
                 {
                     if (check_naked_pairs(p_cells, i, j))
                     {
-                        if (!is_box || (j != i + 3 && j != i + 1) )
+                        if (is_box)
                         {
-                            p_naked_pairs[(*p_counter)++] = (NakedPairs){p_cells, i};
-                            break;
+                            if (p_cells[i]->row_index == p_cells[j]->row_index) continue;
+                            if (p_cells[i]->col_index == p_cells[j]->col_index) continue;
                         }
+                        p_naked_pairs[(*p_counter)++] = (NakedPairs){p_cells, i};
                     }
                 }
             }

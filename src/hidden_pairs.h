@@ -4,8 +4,7 @@
 
 typedef struct HiddenPairs_impl
 {
-    Cell **p_cells;
-    int index;
+    Cell *p_cell;
     int values[2];
 } HiddenPairs;
 

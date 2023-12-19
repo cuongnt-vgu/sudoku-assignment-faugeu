@@ -114,7 +114,7 @@ int hidden_triples(SudokuBoard *p_board)
                 }
             }
         }
-        if (change == 1) offset--;
+        offset -= change;
     }
     return counter - offset;
 }
