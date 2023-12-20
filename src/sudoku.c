@@ -53,11 +53,13 @@ int main(int argc, char **argv)
         if (solved_counter)
         {
             printf("hidden_pairs %d\n", solved_counter);
+            continue;
         }
         solved_counter = hidden_triples(board);
         if (solved_counter)
         {
             printf("hidden_tripples %d\n", solved_counter);
+            continue;
         }
     }
     print_solution(board);
