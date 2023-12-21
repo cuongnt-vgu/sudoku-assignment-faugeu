@@ -22,7 +22,7 @@ int check_hidden_triples(Cell **p_cells, int possible_triples[], int *indices)
     return cell_counter == 3;
 }
 
-void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p_counter, int is_box)
+void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p_counter)
 {
     int candidate_counter[BOARD_SIZE];
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -62,11 +62,6 @@ void find_hidden_triples(Cell **p_cells, HiddenTriples *p_hidden_triples, int *p
                 int indices[BOARD_SIZE];
                 if (check_hidden_triples(p_cells, values, indices))
                 {
-                    if (is_box == 1)
-                    {
-                        if (indices[0] % 3 == 0 && indices[1] == indices[0]+1 && indices[2] == indices[0]+2) continue;
-                        else if (indices[0] >= 0 && indices[0] <= 2 && indices[1] == indices[0]+3 && indices[2] == indices[0]+6) continue;
-                    }
                     p_hidden_triples[(*p_counter)++] = (HiddenTriples){p_cells, {indices[0], indices[1], indices[2]}, {possible_triples[i], possible_triples[j], possible_triples[k]}};
                 }
             }
@@ -82,9 +77,9 @@ int hidden_triples(SudokuBoard *p_board)
 
     for (int i = 0; i < BOARD_SIZE; i++)
     {
-        find_hidden_triples(p_board->p_rows[i], p_hidden_triples, &counter, 0);
-        find_hidden_triples(p_board->p_cols[i], p_hidden_triples, &counter, 0);
-        find_hidden_triples(p_board->p_boxes[i], p_hidden_triples, &counter, 1);
+        find_hidden_triples(p_board->p_rows[i], p_hidden_triples, &counter);
+        find_hidden_triples(p_board->p_cols[i], p_hidden_triples, &counter);
+        find_hidden_triples(p_board->p_boxes[i], p_hidden_triples, &counter);
     }
     int offset = counter;
     for (int i = 0; i < counter; i++)
@@ -96,21 +91,18 @@ int hidden_triples(SudokuBoard *p_board)
         {
             triples_values[j] = p_hidden_triples[i].values[j];
         }
-        for (int j = 0; j < BOARD_SIZE; j++)
+        for (int j = 0; j < 3; j++)
         {
-            if (check_cell_in_hidden_triples(p_cells[j], triples_values))
+            int index = p_hidden_triples[i].indices[j];
+            for (int k = 1; k < BOARD_SIZE+1; k++)
             {
-                for (int k = 1; k < BOARD_SIZE+1; k++)
+                if (is_candidate(p_cells[index], k))
                 {
                     if (k != triples_values[0] && k != triples_values[1] && k != triples_values[2])
                     {
-
-                        if (is_candidate(p_cells[j], k))
-                        {
-                            unset_candidate(p_cells[j], k);
-                            change = 1;
-                        }                     
-                    }
+                        unset_candidate(p_cells[index], k);
+                        change = 1;
+                    }                     
                 }
             }
         }

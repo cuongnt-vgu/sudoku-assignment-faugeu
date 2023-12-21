@@ -68,7 +68,6 @@ int naked_pairs(SudokuBoard *p_board)
             }
         }
         free(candidates);
-
     }
     return counter;
 }
