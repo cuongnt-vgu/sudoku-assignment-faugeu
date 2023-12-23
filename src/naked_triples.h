@@ -12,5 +12,6 @@ typedef struct NakedTriples_impl
 int is_in_triples(int triples[3], int value);
 int check_cell_in_triples(Cell *p_cell, int triples[3]);
 int check_naked_triples(Cell **p_cells, int possible_triples[], int *indices);
-void find_naked_triples(Cell **p_cells, NakedTriples *p_naked_triples, int *p_counter, int unit);
+void find_naked_triples(Cell **p_cells, NakedTriples *p_naked_triples, int *p_counter);
+int check_solved_triples(NakedTriples p_naked_triple, NakedTriples *solved_triples, int solved_counter);
 int naked_triples(SudokuBoard *p_board);
