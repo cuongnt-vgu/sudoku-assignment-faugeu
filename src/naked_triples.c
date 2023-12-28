@@ -121,9 +121,9 @@ int naked_triples(SudokuBoard *p_board)
     for (int i = 0; i < counter; i++)
     {
         if (check_solved_triples(p_naked_triples[i], solved_triples, solved_counter)) offset++;
+        else solved_triples[solved_counter++] = p_naked_triples[i];
 
         Cell** p_cells = p_naked_triples[i].p_cells;
-        solved_triples[solved_counter++] = p_naked_triples[i];
         for (int j = 0; j < BOARD_SIZE; j++)
         {
             if (j != p_naked_triples[i].indices[0] && j != p_naked_triples[i].indices[1] && j != p_naked_triples[i].indices[2])

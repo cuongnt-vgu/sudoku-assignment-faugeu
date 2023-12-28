@@ -69,7 +69,7 @@ int naked_pairs(SudokuBoard *p_board)
     for (int i = 0; i < counter; i++)
     {
         if (check_solved_pairs(p_naked_pairs[i], solved_pairs, solved_count)) offset++;
-        solved_pairs[solved_count++] = p_naked_pairs[i];
+        else solved_pairs[solved_count++] = p_naked_pairs[i];
 
         Cell** p_cells = p_naked_pairs[i].p_cells;
         int* candidates = get_candidates(p_cells[p_naked_pairs[i].index1]);
